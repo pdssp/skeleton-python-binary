@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools", "wheel", "setuptools_scm"]
+build-backend = 'setuptools.build_meta'
+
+[tool.black]
+line-length = 79
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.flit.metadata]
+module = "{{cookiecutter.project_slug}}"
+author = "{{cookiecutter.full_name}}"
+author-email = "{{cookiecutter.email}}"
+home-page = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
+classifiers = [ "License :: OSI Approved :: {% if cookiecutter.open_source_license == 'GNU General Public License v3' -%}GNU General Public License v3 (GPLv3){% elif cookiecutter.open_source_license == 'GNU Lesser General Public License v3' -%}GNU Lesser General Public License v3 (LGPLv3){% elif cookiecutter.open_source_license == 'GNU Affero General Public License v3' -%}GNU Affero General Public License v3 (AGPLv3){% endif %}",]
+description-file = "README.rst"

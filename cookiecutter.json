@@ -1,0 +1,27 @@
+{
+  "full_name": "Jean-Christophe Malapert",
+  "institute": "CNES",
+  "email": "jean-christophe.malapert@cnes.fr",
+  "github_username": "J-Christophe",
+  "project_name": "My Great Project",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "project_short_description": "My Great Project description.",
+  "year": "{% now 'utc', '%Y' %}",
+  "_extensions": [
+    "jinja2_time.TimeExtension"
+  ],
+  "consortium_name": [
+    "Pôle Surfaces Planétaires"
+  ],
+  "pypi_username": "{{ cookiecutter.github_username }}",
+  "version": "0.0.1",
+  "use_pytest": "n",
+  "use_pypi_deployment_with_travis": "y",
+  "add_pyup_badge": "n",
+  "create_author_file": "y",
+  "open_source_license": [
+    "GNU General Public License v3",
+    "GNU Lesser General Public License v3",
+    "GNU Affero General Public License v3"
+  ]
+}
