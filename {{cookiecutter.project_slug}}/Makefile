@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := init
-.PHONY: prepare-dev install-dev data help lint tests coverage upload-prod-pypi upload-test-pypi doc doc-pdf visu-doc-pdf visu-doc tox licences
+.PHONY: prepare-dev install-dev data help lint tests coverage upload-prod-pypi upload-test-pypi update_req update_req_dev pyclean doc doc-pdf visu-doc-pdf visu-doc tox licences
 VENV = ".{{cookiecutter.project_slug}}"
 
 define PROJECT_HELP_MSG
@@ -31,14 +31,19 @@ Usage:\n
 	make upload-test-pypi\t\t   Upload the pypi package on the test platform\n
 	make upload-prod-pypi\t\t   Upload the pypi package on the prod platform\n
 	\n
+	make update_req\t\t			Update the version of the packages in requirements.txt\n
+	make update_req_dev\t\t 	Update the version of the packages in requirements_dev.txt\n
+	\n
+	make pyclean\t\t\t		Clean .pyc files and __pycache__ directories\n
+	\n
 	-------------------------------------------------------------------------\n
 	\t\tOthers\n
 	-------------------------------------------------------------------------\n
-	make licences\t\t	Display the list of licences\n
-	make version\t\t	Display the version\n
-	make coverage\t\t 	Coverage\n
-	make lint\t\t		Lint\n
-	make tox\t\t 		Run all tests\n
+	make licences\t\t\t		Display the list of licences\n
+	make version\t\t\t		Display the version\n
+	make coverage\t\t\t 	Coverage\n
+	make lint\t\t\t			Lint\n
+	make tox\t\t\t 			Run all tests\n
 
 endef
 export PROJECT_HELP_MSG
@@ -118,3 +123,12 @@ upload-prod-pypi:
 
 licences:
 	pip-licenses
+
+update_req:
+	pur -r requirements.txt
+
+update_req_dev:
+	pur -r requirements_dev.txt
+
+pyclean:
+	find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete

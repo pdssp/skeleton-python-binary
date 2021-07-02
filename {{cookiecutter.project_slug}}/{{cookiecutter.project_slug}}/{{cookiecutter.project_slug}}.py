@@ -1,42 +1,50 @@
+"""This module contains the library."""
 import logging
 import configparser
+from ._version import __name_soft__
 
-class {{cookiecutter.project_slug}}Lib:
+logger = logging.getLogger(__name__)
+
+
+class {{cookiecutter.project_class_lib}}:
+    """The library"""
+
     def __init__(self, path_to_conf: str, directory: str, *args, **kwargs):
+        # pylint: disable=unused-argument
         if "level" in kwargs:
-            self._parse_level(kwargs["level"])
+            {{cookiecutter.project_class_lib}}._parse_level(kwargs["level"])
 
         self.__directory = directory
         self.__config = configparser.ConfigParser()
-        self.__config.optionxform = str # type: ignore
+        self.__config.optionxform = str  # type: ignore
         self.__config.read(path_to_conf)
 
-
-    def _parse_level(self, level: str):
+    @staticmethod
+    def _parse_level(level: str):
         """Parse level name and set the rigt level for the logger.
         If the level is not known, the INFO level is set
 
         Args:
             level (str): level name
         """
-        logger = logging.getLogger()
+        logger_main = logging.getLogger(__name_soft__)
         if level == "INFO":
-            logger.setLevel(logging.INFO)
+            logger_main.setLevel(logging.INFO)
         elif level == "DEBUG":
-            logger.setLevel(logging.DEBUG)
+            logger_main.setLevel(logging.DEBUG)
         elif level == "WARNING":
-            logger.setLevel(logging.WARNING)
+            logger_main.setLevel(logging.WARNING)
         elif level == "ERROR":
-            logger.setLevel(logging.ERROR)
+            logger_main.setLevel(logging.ERROR)
         elif level == "CRITICAL":
-            logger.setLevel(logging.CRITICAL)
+            logger_main.setLevel(logging.CRITICAL)
         elif level == "TRACE":
-            logger.setLevel(logging.TRACE) # type: ignore
+            logger_main.setLevel(logging.TRACE)  # type: ignore # pylint: disable=no-member
         else:
-            logger.warning(
-                "Unknown level name : %s - setting level to INFO" % level
+            logger_main.warning(
+                "Unknown level name : %s - setting level to INFO", level
             )
-            logger.setLevel(logging.INFO)
+            logger_main.setLevel(logging.INFO)
 
     @property
     def config(self) -> configparser.ConfigParser:

@@ -20,15 +20,16 @@ import logging
 import argparse
 import signal
 import sys
-from {{cookiecutter.project_slug}} import __name_soft__
 from {{cookiecutter.project_slug}} import __author__
 from {{cookiecutter.project_slug}} import __copyright__
 from {{cookiecutter.project_slug}} import __description__
 from {{cookiecutter.project_slug}} import __version__
-from .{{cookiecutter.project_slug}} import {{cookiecutter.project_slug}}Lib
+from .{{cookiecutter.project_slug}} import {{cookiecutter.project_class_lib}}
 
 
 class SmartFormatter(argparse.HelpFormatter):
+    """Smart formatter for argparse - The lines are split for long text"""
+
     def _split_lines(self, text, width):
         if text.startswith("R|"):
             return text[2:].splitlines()
@@ -36,17 +37,36 @@ class SmartFormatter(argparse.HelpFormatter):
         return argparse.HelpFormatter._split_lines(self, text, width)
 
 
-class SIGINT_handler:
-    def __init__(self):
-        self.SIGINT = False
+class SigintHandler:  # pylint: disable=too-few-public-methods
+    """Handles the signal"""
 
-    def signal_handler(self, signal, frame):
+    def __init__(self):
+        self.SIGINT = False   # pylint: disable=invalid-name
+
+    def signal_handler(self, sig: int, frame):
+        """Trap the signal
+
+        Args:
+            sig (int): the signal number
+            frame: the current stack frame
+        """
+        # pylint: disable=unused-argument
         logging.error("You pressed Ctrl+C")
         self.SIGINT = True
         sys.exit(2)
 
-def str2bool(v: str) -> bool:
-    return v.lower() in ("yes", "true", "True", "t", "1")
+
+def str2bool(string_to_test: str) -> bool:
+    """Checks if a given string is a boolean
+
+    Args:
+        string_to_test (str): string to test
+
+    Returns:
+        bool: True when the string is a boolean otherwise False
+    """
+    return string_to_test.lower() in ("yes", "true", "True", "t", "1")
+
 
 def parse_cli() -> argparse.Namespace:
     """Parse command line inputs.
@@ -93,25 +113,27 @@ def parse_cli() -> argparse.Namespace:
 
     return parser.parse_args()
 
+
 def run():
+    """Main function that instanciates the library."""
     logger = logging.getLogger(__name__)
-    logger.info(f"Main program of {__name_soft__}")
-    handler = SIGINT_handler()
+    handler = SigintHandler()
     signal.signal(signal.SIGINT, handler.signal_handler)
     try:
         options_cli = parse_cli()
 
-        {{cookiecutter.project_slug}} = {{cookiecutter.project_slug}}Lib(
+        {{cookiecutter.project_slug}} = {{cookiecutter.project_class_lib}}(
             options_cli.conf_file,
             options_cli.output_directory,
             level=options_cli.level,
         )
         logger.info({{cookiecutter.project_slug}})
         sys.exit(0)
-    except Exception as e:
-        logging.exception(e)
+    except Exception as error:  # pylint: disable=broad-except
+        logging.exception(error)
         sys.exit(1)
     print("OK")
+
 
 if __name__ == "__main__":
     # execute only if run as a script

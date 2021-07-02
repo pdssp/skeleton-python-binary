@@ -164,7 +164,7 @@ class UtilsMonitoring:  # noqa: R0205
                 )
                 logger.info(msg)
             else:
-                msg = f"Unable to load the number of records in file '{args[1]}' - type: {type_result}"
+                msg = f"Unable to load the number of records in file '{args[1]}' - type: {type_result}"  # pylint: disable=line-too-long
                 logger.warning(msg)
             return result
 

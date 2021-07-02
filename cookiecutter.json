@@ -2,9 +2,10 @@
   "full_name": "Jean-Christophe Malapert",
   "institute": "CNES",
   "email": "jean-christophe.malapert@cnes.fr",
-  "github_username": "J-Christophe",
+  "github_username": "",
   "project_name": "My Great Project",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "project_class_lib": "{{ cookiecutter.project_slug.title().replace('_', '') + 'Lib' }}",
   "project_short_description": "My Great Project description.",
   "year": "{% now 'utc', '%Y' %}",
   "_extensions": [

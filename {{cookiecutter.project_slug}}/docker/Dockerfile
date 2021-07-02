@@ -29,8 +29,8 @@ LABEL \
     org.label-schema.build-date=$BUILD_DATE \
     org.label-schema.name="cdm" \
     org.label-schema.description="{{ cookiecutter.project_short_description }}" \
-    org.label-schema.url="https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}" \
-    org.label-schema.vcs-url="https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}" \
+    org.label-schema.url="https://github.com/pole-surfaces-planetaires/{{ cookiecutter.project_slug }}" \
+    org.label-schema.vcs-url="https://github.com/pole-surfaces-planetaires/{{ cookiecutter.project_slug }}" \
     org.label-schema.vcs-ref=$VCS_REF \
     org.label-schema.vendor="{{ cookiecutter.consortium_name }}" \
     org.label-schema.version=$VERSION
@@ -38,11 +38,11 @@ LABEL \
 RUN apt-get update && \
     apt-get install -y \
     software-properties-common apt-transport-https wget git\
-    make python3-pip \
+    make python3-pip && \
     update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1 && \
-    pip install setuptools \
-    git clone "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}.git" \
-    cd {{ cookiecutter.project_slug }} \
+    pip install setuptools && \
+    git clone "https://github.com/pole-surfaces-planetaires/{{ cookiecutter.project_slug }}.git" && \
+    cd {{ cookiecutter.project_slug }} && \
     make
 
 # Custom prompt

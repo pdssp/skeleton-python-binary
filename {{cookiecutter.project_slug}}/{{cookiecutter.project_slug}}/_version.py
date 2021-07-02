@@ -26,7 +26,7 @@ except DistributionNotFound:
     __version__ = "0.0.0"
 __title__ = "{{cookiecutter.project_name}}"
 __description__ = "{{cookiecutter.project_short_description}}"
-__url__ = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}"
+__url__ = "https://github.com/pole-surfaces-planetaires/{{ cookiecutter.project_slug }}"
 __author__ = "{{cookiecutter.full_name}}"
 __author_email__ = "{{cookiecutter.email}}"
 __license__ = "{{cookiecutter.open_source_license}}"
