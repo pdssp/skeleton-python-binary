@@ -20,7 +20,7 @@ Usage:\n
 	make prepare-dev\t\t 		Prepare Development environment\n
 	make install-dev\t\t 		Install COTS and {{ cookiecutter.project_slug }} for development purpose\n
 	make data\t\t\t				Download data\n
-	make test\t\t\t             Run units and integration tests\n
+	make tests\t\t\t             Run units and integration tests\n
 	\n
 	make doc\t\t\t 				Generate the documentation\n
 	make doc-pdf\t\t\t 			Generate the documentation as PDF\n
