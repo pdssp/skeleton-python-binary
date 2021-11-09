@@ -32,7 +32,6 @@ release = {{ cookiecutter.project_slug }}.__version__
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
-    'sphinx.ext.autosummary',
     'sphinx.ext.autosummary'
 ]
 
