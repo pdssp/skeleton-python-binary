@@ -237,9 +237,9 @@ latex_elements = {
 
             %% \vfill adds at the bottom
             \vfill
-            \small \textit{More information about }{\href{""" + project_url + """}{""" + title + """}}
+            \small \textit{More information about }{\href{""" + project_url + r"""}{""" + title + r"""}}
 
-            \small \textit{""" + copyright + """}
+            \small \textit{""" + copyright + r"""}
         \end{titlepage}
 
         \clearpage
