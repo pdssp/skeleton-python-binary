@@ -1,1 +1,4 @@
+=========
+CHANGELOG
+=========
 .. include:: ../../CHANGELOG

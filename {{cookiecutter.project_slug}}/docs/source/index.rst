@@ -1,18 +1,27 @@
 Welcome to {{ cookiecutter.project_name }}'s documentation!
-======================================
+==================================
 
 .. toctree::
    :maxdepth: 2
+   :includehidden:
    :caption: Contents:
 
-   readme
-   modules
-   contributing
-   {% if cookiecutter.create_author_file == 'y' -%}authors
-   {% endif -%}history
+   history
+   introduction
+   applicable_docs
+   glossary
+   conventions
+   purpose
+   external_view
+   operations_environment
+   operations_basics
+   operation_manual
+   reference_manual
+   tutorial
 
-Indices and tables
-==================
+================
+Analytical Index
+================
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`

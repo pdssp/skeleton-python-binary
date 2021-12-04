@@ -76,7 +76,7 @@ prepare-dev:
 	cp .pypirc ~${USER} && git init && echo "python3 -m venv {{cookiecutter.project_slug}}-env && export PYTHONPATH=. && export PATH=`pwd`/{{cookiecutter.project_slug}}-env/bin:${PATH}" > ${VENV} && echo "source \"`pwd`/{{cookiecutter.project_slug}}-env/bin/activate\"" >> ${VENV} && scripts/install-hooks.bash && echo "\nnow source this file: \033[31msource ${VENV}\033[0m"
 
 install-dev:
-	pip install -r requirements.txt && pip install -r requirements_dev.txt && pre-commit install && pre-commit autoupdate && python3 setup.py develop
+	pip install --upgrade pip && pip install -r requirements.txt && pip install -r requirements_dev.txt && pre-commit install && pre-commit autoupdate && python3 setup.py develop
 
 coverage:  ## Run tests with coverage
 	coverage erase
@@ -92,9 +92,13 @@ tests:  ## Run tests
 	pytest -ra
 
 tox:
-	tox -e py38
+	tox -e py37
 
 doc:
+	make licences > third_party.txt
+	rm -rf docs/source/_static/coverage
+	pytest -ra --html=docs/source/_static/report.html
+	coverage html -d docs/source/_static/coverage
 	make html -C docs
 
 doc-pdf:
