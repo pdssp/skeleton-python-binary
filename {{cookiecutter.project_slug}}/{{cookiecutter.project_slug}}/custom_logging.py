@@ -79,10 +79,13 @@ class LogRecord(logging.LogRecord):  # pylint: disable=R0903
         Returns:
             str: Returns the message
         """
-        msg = str(self.msg)
-        if isinstance(self.args, dict):
-            return msg.format(self.args)
-        return msg % self.args if self.args else msg
+        msg = self.msg
+        if self.args:
+            if isinstance(self.args, dict):
+                msg = msg.format(**self.args)
+            else:
+                msg = msg.format(*self.args)
+        return msg
 
 
 class CustomColorFormatter(logging.Formatter):
