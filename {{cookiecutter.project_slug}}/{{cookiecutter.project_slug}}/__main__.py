@@ -34,7 +34,9 @@ class SmartFormatter(argparse.HelpFormatter):
         if text.startswith("R|"):
             return text[2:].splitlines()
         # this is the RawTextHelpFormatter._split_lines
-        return argparse.HelpFormatter._split_lines(self, text, width)
+        return argparse.HelpFormatter._split_lines( # pylint: disable=protected-access
+            self, text, width
+        )
 
 
 class SigintHandler:  # pylint: disable=too-few-public-methods

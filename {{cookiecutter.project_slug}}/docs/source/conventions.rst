@@ -2,7 +2,7 @@
 Conventions
 ===========
 
-*The :term:`SUM` shall summarise symbols, stylistics conventions, and command
+*The* :term:`SUM` *shall summarise symbols, stylistics conventions, and command \
 syntax conventions used in the document.*
 
 .. note::

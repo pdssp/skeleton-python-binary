@@ -43,8 +43,8 @@ try:
         disable_existing_loggers=False,
     )
     logging.debug(
-        "file %s loaded" % os.path.join(PATH_TO_CONF, "logging.conf")
+        f"file {os.path.join(PATH_TO_CONF, 'logging.conf'} loaded"
     )
 except Exception as exception:  # pylint: disable=broad-except
-    logging.warning("cannot load logging.conf : %s" % exception)
+    logging.warning(f"cannot load logging.conf : {exception}")
 logging.setLogRecordFactory(LogRecord)  # pylint: disable=no-member

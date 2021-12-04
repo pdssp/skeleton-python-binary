@@ -8,6 +8,7 @@
   "project_class_lib": "{{ cookiecutter.project_slug.title().replace('_', '') + 'Lib' }}",
   "project_short_description": "My Great Project description.",
   "year": "{% now 'utc', '%Y' %}",
+  "month": "{% now 'utc', '%B' %}",
   "_extensions": [
     "jinja2_time.TimeExtension"
   ],

@@ -105,10 +105,10 @@ doc-pdf:
 	make doc && make latexpdf -C docs
 
 visu-doc-pdf:
-	make doc-pdf && acroread docs/build/latex/{{cookiecutter.project_slug}}.pdf
+	acroread docs/build/latex/{{cookiecutter.project_slug}}.pdf
 
 visu-doc:
-	make doc && firefox docs/build/html/index.html
+	firefox docs/build/html/index.html
 
 release:
 	python3 setup.py sdist

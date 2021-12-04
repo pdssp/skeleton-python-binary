@@ -165,7 +165,7 @@ latex_elements = {
         %%%%%%%%%%% datetime
         \usepackage{datetime}
 
-        \newdateformat{MonthYearFormat}{%
+        \newdateformat{MonthYearFormat}{{"{%"}}
             \monthname[\THEMONTH], \THEYEAR}
 
 
@@ -203,9 +203,9 @@ latex_elements = {
         %%%%%%%%%%% Quote Styles at the top of chapter
         \usepackage{epigraph}
         \setlength{\epigraphwidth}{0.8\columnwidth}
-        \newcommand{\chapterquote}[2]{\epigraphhead[60]{\epigraph{\textit{#1}}{\textbf {\textit{--#2}}}}}
+        {{"\\newcommand{\chapterquote}[2]{\epigraphhead[60]{\epigraph{\textit{#1}}{\textbf {\textit{--#2}}}}}"}}
         %%%%%%%%%%% Quote for all places except Chapter
-        \newcommand{\sectionquote}[2]{{\quote{\textit{``#1''}}{\textbf {\textit{--#2}}}}}
+        {{"\\newcommand{\sectionquote}[2]{{\quote{\textit{``#1''}}{\textbf {\textit{--#2}}}}}"}}
     """,
     "maketitle": r"""
         \pagenumbering{Roman} %%% to avoid page 1 conflict with actual page 1
@@ -214,9 +214,7 @@ latex_elements = {
             \centering
 
             \vspace*{40mm} %%% * is used to give space from top
-            \textbf{\Huge {"""
-    + title
-    + r"""}}
+            \textbf{\Huge {"""+title+ r"""}}
 
             \vspace{0mm}
             \begin{figure}[!h]
@@ -225,11 +223,9 @@ latex_elements = {
             \end{figure}
 
             \vspace{0mm}
-            \Large \textbf{{"""
-    + author
-    + r"""}}
+            \Large \textbf{"""+author+ r"""}
 
-            \small Created on : November, 2021
+            \small Created on : {{ cookiecutter.month }}, {{ cookiecutter.year }}
 
             \vspace*{0mm}
             \small  Last updated : \MonthYearFormat\today
