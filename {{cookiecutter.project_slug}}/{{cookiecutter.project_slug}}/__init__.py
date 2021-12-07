@@ -43,7 +43,7 @@ try:
         disable_existing_loggers=False,
     )
     logging.debug(
-        f"file {os.path.join(PATH_TO_CONF, 'logging.conf'} loaded"
+        f"file {os.path.join(PATH_TO_CONF, 'logging.conf')} loaded"
     )
 except Exception as exception:  # pylint: disable=broad-except
     logging.warning(f"cannot load logging.conf : {exception}")
