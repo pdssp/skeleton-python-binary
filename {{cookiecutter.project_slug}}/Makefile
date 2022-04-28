@@ -98,6 +98,7 @@ doc:
 	make licences > third_party.txt
 	rm -rf docs/source/_static/coverage
 	pytest -ra --html=docs/source/_static/report.html
+	make coverage
 	coverage html -d docs/source/_static/coverage
 	make html -C docs
 
