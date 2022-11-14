@@ -21,11 +21,11 @@ repos:
     rev: v2.4.0
     hooks:
       - id: reorder-python-imports
-  - repo: https://github.com/ambv/black
-    rev: stable
+  - repo: https://github.com/psf/black.git
+    rev: 22.10.0
     hooks:
       - id: black
-        language_version: python3.8
+        language_version: python3
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.7.9
     hooks:
