@@ -73,7 +73,7 @@ user:
 	python3 setup.py install --user
 
 prepare-dev:
-	cp .pypirc ~${USER} && git init && echo "python3 -m venv {{cookiecutter.project_slug}}-env && export PYTHONPATH=. && export PATH=`pwd`/{{cookiecutter.project_slug}}-env/bin:${PATH}" > ${VENV} && echo "source \"`pwd`/{{cookiecutter.project_slug}}-env/bin/activate\"" >> ${VENV} && scripts/install-hooks.bash && echo "\nnow source this file: \033[31msource ${VENV}\033[0m"
+	cp .pypirc ~${USER} && git init && echo "python3 -m venv {{cookiecutter.project_slug}}-env && export PYTHONPATH=. && export PATH=`pwd`/{{cookiecutter.project_slug}}-env/bin:"${PATH}"" > ${VENV} && echo "source \"`pwd`/{{cookiecutter.project_slug}}-env/bin/activate\"" >> ${VENV} && scripts/install-hooks.bash && echo "\nnow source this file: \033[31msource ${VENV}\033[0m"
 
 install-dev:
 	pip install --upgrade pip && pip install -r requirements.txt && pip install -r requirements_dev.txt && pre-commit install && pre-commit autoupdate && python3 setup.py develop
