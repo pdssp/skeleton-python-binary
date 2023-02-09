@@ -240,7 +240,7 @@ latex_elements = {
 
         \clearpage
         \pagenumbering{roman}
-        \tableofcontents
+        \sphinxtableofcontents
         \listoffigures
         \listoftables
         \clearpage
