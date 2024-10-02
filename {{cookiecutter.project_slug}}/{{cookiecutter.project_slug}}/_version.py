@@ -16,18 +16,26 @@
 # You should have received a copy of the {% if cookiecutter.open_source_license == 'GNU General Public License v3' -%}GNU General Public License{% elif cookiecutter.open_source_license == 'GNU Lesser General Public License v3' -%}GNU Lesser General Public License{% elif cookiecutter.open_source_license == 'GNU Affero General Public License v3' -%}GNU Affero General Public License{% endif %}
 # along with {{cookiecutter.project_name}}.  If not, see <https://www.gnu.org/licenses/>.
 """Project metadata."""
-from pkg_resources import DistributionNotFound
-from pkg_resources import get_distribution
+import toml
+import os
 
-__name_soft__ = "{{cookiecutter.project_slug}}"
-try:
-    __version__ = get_distribution(__name_soft__).version
-except DistributionNotFound:
-    __version__ = "0.0.0"
-__title__ = "{{cookiecutter.project_name}}"
-__description__ = "{{cookiecutter.project_short_description}}"
-__url__ = "https://github.com/pole-surfaces-planetaires/{{ cookiecutter.project_slug }}"
-__author__ = "{{cookiecutter.full_name}}"
-__author_email__ = "{{cookiecutter.email}}"
-__license__ = "{{cookiecutter.open_source_license}}"
-__copyright__ = "{{cookiecutter.year}}, {{cookiecutter.institute}} ({{cookiecutter.full_name}} for {{cookiecutter.consortium_name}})"
+project_root = os.path.dirname(os.path.dirname(__file__))
+pyproject_path = os.path.join(project_root, "pyproject.toml")
+
+
+with open(pyproject_path, "r") as file:
+    pyproject_content = toml.load(file)
+
+project_tool = pyproject_content.get("tool", {})
+project_metadata = project_tool.get("poetry", {})
+
+__name_soft__ = project_metadata.get("name", "unknown")
+__version__ = project_metadata.get("version", "0.0.0")
+__title__ = project_metadata.get("name", "unknown")
+__description__ = project_metadata.get("description", "")
+__url__ = project_metadata.get("homepage", "")
+__author__ = project_metadata.get("authors", [{}])[0]
+__author_email__ = project_metadata.get("authors", [{}])[0]
+__license__ = project_metadata.get("license", "")
+__copyright__ = "2024, {{cookiecutter.full_name}}"
+

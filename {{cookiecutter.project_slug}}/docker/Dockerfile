@@ -1,51 +1,74 @@
-# {{cookiecutter.project_name}} - {{cookiecutter.project_short_description}}
+# -*- coding: utf-8 -*-
+# {{cookiecutter.project_name}} - {{cookiecutter.project_description}}
 # Copyright (C) {{cookiecutter.year}} - {{cookiecutter.institute}} ({{cookiecutter.full_name}} for {{cookiecutter.consortium_name}})
-#
-# This file is part of {{cookiecutter.project_name}}.
-#
-# {{cookiecutter.project_name}} is free software: you can redistribute it and/or modify
-# it under the terms of the {% if cookiecutter.open_source_license == 'GNU General Public License v3' -%}GNU General Public License{% elif cookiecutter.open_source_license == 'GNU Lesser General Public License v3' -%}GNU Lesser General Public License v3 {% elif cookiecutter.open_source_license == 'GNU Affero General Public License v3' -%}GNU Affero General Public License v3{% endif %} as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# {{cookiecutter.project_name}} is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# {% if cookiecutter.open_source_license == 'GNU General Public License v3' -%}GNU General Public License{% elif cookiecutter.open_source_license == 'GNU Lesser General Public License v3' -%}GNU Lesser General Public License v3 {% elif cookiecutter.open_source_license == 'GNU Affero General Public License v3' -%}GNU Affero General Public License v3{% endif %} for more details.
-#
-# You should have received a copy of the {% if cookiecutter.open_source_license == 'GNU General Public License v3' -%}GNU General Public License{% elif cookiecutter.open_source_license == 'GNU Lesser General Public License v3' -%}GNU Lesser General Public License v3 {% elif cookiecutter.open_source_license == 'GNU Affero General Public License v3' -%}GNU Affero General Public License v3{% endif %}
-# along with {{cookiecutter.project_name}}.  If not, see <https://www.gnu.org/licenses/>.
-FROM ubuntu:latest
+# This file is part of {{cookiecutter.project_name}} <{{ cookiecutter.project_url }}>
+# SPDX-License-Identifier: {% if cookiecutter.open_source_license == 'GNU General Public License v3' -%}GPL-3.0-or-later{% elif cookiecutter.open_source_license == 'GNU Lesser General Public License v3' -%}LGPL-3.0-or-later{% elif cookiecutter.open_source_license == 'GNU Affero General Public License v3' -%}AGPL-3.0{% endif %}
 
-LABEL maintainer="{{ cookiecutter.full_name }} <{{ cookiecutter.email }}>"
+# Stage 1: Builder
+FROM python:{{cookiecutter.python_version}}-slim-bullseye AS builder
 
-ARG BUILD_DATE
-ARG VERSION
-ARG DEBIAN_FRONTEND=noninteractive
+# Set environment variables to optimize Python execution in Docker:
+# - PYTHONDONTWRITEBYTECODE: Prevents Python from writing bytecode (.pyc) files to disk, reducing image size and avoiding potential conflicts.
+# - PYTHONUNBUFFERED: Ensures Python outputs are sent directly to terminal without buffering, providing real-time logging and error visibility.
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# Labels (based on http://label-schema.org/rc1/)
+# Install dependencies
+RUN apt-get update -qq \
+      && apt upgrade --yes \
+      && apt-get -y --no-install-recommends install \
+         build-essential \
+         ca-certificates \
+         gdb \
+         gfortran \
+         wget \
+         file \
+         apt-utils \
+         curl \
+         git  \
+      && apt-get clean all \
+      && rm -r /var/lib/apt/lists/*
+
+
+# Install Poetry
+RUN curl -sSL https://install.python-poetry.org | python -
+
+# Copy only dependencies
+WORKDIR /app
+COPY pyproject.toml poetry.lock /app/
+
+# Install dependencies
+RUN poetry install --no-dev --no-root
+
+# Stage 2: Runtime
+FROM python:{{cookiecutter.python_version}}-slim-bullseye AS runtime
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Labels (based on OCI Image Format Specification)
 LABEL \
-    org.label-schema.schema-version="1.0" \
-    org.label-schema.build-date=$BUILD_DATE \
-    org.label-schema.name="cdm" \
-    org.label-schema.description="{{ cookiecutter.project_short_description }}" \
-    org.label-schema.url="https://github.com/pole-surfaces-planetaires/{{ cookiecutter.project_slug }}" \
-    org.label-schema.vcs-url="https://github.com/pole-surfaces-planetaires/{{ cookiecutter.project_slug }}" \
-    org.label-schema.vcs-ref=$VCS_REF \
-    org.label-schema.vendor="{{ cookiecutter.consortium_name }}" \
-    org.label-schema.version=$VERSION
+    org.opencontainers.image.version=$VERSION \
+    org.opencontainers.image.created=$BUILD_DATE \
+    org.opencontainers.image.title="{{ cookiecutter.project_name }}" \
+    org.opencontainers.image.ref.name="{{ cookiecutter.project_slug }}" \
+    org.opencontainers.image.description="{{ cookiecutter.project_description }}" \
+    org.opencontainers.image.licenses="{{ cookiecutter.open_source_license }}" \
+    org.opencontainers.image.source="{{ cookiecutter.project_url }}" \
+    org.opencontainers.image.documentation="{{ cookiecutter.project_web_site }}" \
+    org.opencontainers.image.vendor="{{ cookiecutter.consortium_name }}" \
+    org.opencontainers.image.authors="{{ cookiecutter.full_name }} <{{ cookiecutter.email }}>"
 
-RUN apt-get update && \
-    apt-get install -y \
-    software-properties-common apt-transport-https wget git\
-    make python3-pip && \
-    update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1 && \
-    pip install setuptools && \
-    git clone "https://github.com/pole-surfaces-planetaires/{{ cookiecutter.project_slug }}.git" && \
-    cd {{ cookiecutter.project_slug }} && \
-    make
+# Copy dependencies from builder stage
+COPY --from=builder /usr/local/lib/python{{cookiecutter.python_version}}/site-packages /usr/local/lib/python{{cookiecutter.python_version}}/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+COPY --from=builder /{{project_slug}} /{{project_slug}}
 
-# Custom prompt
-RUN echo 'export PS1="\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@platoscope-dev\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$"' >> /etc/bash.bashrc
+# Set working directory
+WORKDIR /app
 
-CMD ["{{cookiecutter.project_slug}}"]
+# Copy application code
+COPY . /app
+
+CMD [{{project_slug}}]

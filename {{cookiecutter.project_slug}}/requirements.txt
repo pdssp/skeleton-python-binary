@@ -1,2 +1,0 @@
-setuptools-scm==6.3.2
-types-setuptools==57.4.4
