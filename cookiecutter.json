@@ -14,6 +14,7 @@
   "consortium_name": [
     "PDSSP [Pôle de Données et Services Surfaces Planétaires]"
   ],
+  "pypi_username": "{{ cookiecutter.github_username }}",
   "version": "0.0.1",
   "open_source_license": [
     "GNU Lesser General Public License v3",
