@@ -1,0 +1,41 @@
+name: Test and Deploy
+
+on:
+  pull_request:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install LaTeX dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y latexmk texlive-full      
+
+    - name: Install Poetry
+      uses: snok/install-poetry@v1      
+
+    - name: Install dependencies
+      run: make install-dev
+
+    - name: Build the HTML doc
+      run:  make doc
+
+    - name: Build the PDF doc
+      run: make doc-pdf
+
+    - name: move PDF to HTML
+      run: mv docs/build/latex/pymoon.pdf docs/build/html
+
+    - name: Deploy on gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: docs/build/html/
