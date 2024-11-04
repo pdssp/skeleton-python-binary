@@ -17,20 +17,8 @@ Help method
 in terms of the actions to be performed by the user, how to invoke the \
 function, possible errors, how to resolve them and what results to expect.*
 
-.. automodule:: {{ cookiecutter.project_slug }}.custom_logging
-.. autoclass:: UtilsLogs
-   :members:
-   :private-members:
-
-.. autoclass:: LogRecord
-   :members:
-   :private-members:
-
-.. autoclass:: CustomColorFormatter
-   :members:
-   :private-members:
-
-.. autoclass:: ShellColorFormatter
+.. automodule:: {{ cookiecutter.project_slug }}.monitoring
+.. autoclass:: UtilsMonitoring
    :members:
    :private-members:
 

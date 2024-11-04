@@ -15,7 +15,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/pole-surfaces-planetaires/{{ cookiecutter.project_slug }}/issues.
+Report bugs at https://github.com/pdssp/{{ cookiecutter.project_slug }}/issues.
 
 If you are reporting a bug, please include:
 
@@ -45,7 +45,7 @@ articles, and such.
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/pole-surfaces-planetaires/{{ cookiecutter.project_slug }}/issues.
+The best way to send feedback is to file an issue at https://github.com/pdssp/{{ cookiecutter.project_slug }}/issues.
 
 If you are proposing a feature:
 
@@ -108,11 +108,7 @@ Tips
 
 To run a subset of tests::
 
-{% if cookiecutter.use_pytest == 'y' -%}
-    $ pytest tests.test_{{ cookiecutter.project_slug }}
-{% else %}
-    $ python -m unittest tests.test_{{ cookiecutter.project_slug }}
-{%- endif %}
+$ pytest tests.test_{{ cookiecutter.project_slug }}
 
 Deploying
 ---------

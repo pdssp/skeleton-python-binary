@@ -1,29 +1,33 @@
 {
-  "full_name": "Jean-Christophe Malapert",
-  "institute": "CNES",
-  "email": "jean-christophe.malapert@cnes.fr",
+  "full_name": "John Doo",
+  "institute": "My institute",
+  "email": "john.doo@foo.com",
   "github_username": "",
   "project_name": "My Great Project",
   "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
   "project_class_lib": "{{ cookiecutter.project_slug.title().replace('_', '') + 'Lib' }}",
-  "project_short_description": "My Great Project description.",
+  "project_url": "https://github.com/pdssp/{{ cookiecutter.project_slug }}",
+  "project_web_site":"{{ cookiecutter.project_url.replace('github.com', 'pdssp.github.io') }}",
+  "project_description": "My Great Project description.",
+  "docker_image_name": "{{ cookiecutter.project_slug + '_image' }}",
   "year": "{% now 'utc', '%Y' %}",
   "month": "{% now 'utc', '%B' %}",
-  "_extensions": [
-    "jinja2_time.TimeExtension"
-  ],
   "consortium_name": [
-    "Pôle Surfaces Planétaires"
+    "PDSSP (Pôle de Données et Services Surfaces Planétaires)"
+  ],
+  "version": "0.0.1",
+  "open_source_license": [
+    "Apache V2.0",
+    "MIT",
+    "GNU Lesser General Public License v3"
+  ],
+  "python_version": [
+    "3.12",
+    "3.11"
   ],
   "pypi_username": "{{ cookiecutter.github_username }}",
-  "version": "0.0.1",
-  "use_pytest": "n",
-  "use_pypi_deployment_with_travis": "y",
   "add_pyup_badge": "n",
-  "create_author_file": "y",
-  "open_source_license": [
-    "GNU General Public License v3",
-    "GNU Lesser General Public License v3",
-    "GNU Affero General Public License v3"
-  ]
+  "use_pypi_deployment_with_travis": "y",
+  "use_pyenv":false
 }
+
