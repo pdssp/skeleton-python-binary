@@ -1,5 +1,5 @@
 #!/bin/sh
-# {{cookiecutter.project_name}} - {{cookiecutter.project_short_description}}
+# {{cookiecutter.project_name}} - {{cookiecutter.project_description}}
 # Copyright (C) {{cookiecutter.year}} - {{cookiecutter.institute}} ({{cookiecutter.full_name}} for {{cookiecutter.consortium_name}})
 #
 # This file is part of {{cookiecutter.project_name}}.

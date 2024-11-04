@@ -1,0 +1,9 @@
+# Ignore everything
+*
+
+# Allow files and directories
+!/{{ cookiecutter.project_slug }}/
+!/Makefile
+!/pyproject.toml
+!/README.rst
+

@@ -1,6 +1,5 @@
-[build-system]
-requires = ["setuptools", "wheel", "setuptools_scm"]
-build-backend = 'setuptools.build_meta'
+[tool.flit.scripts]
+{{cookiecutter.project_slug}} = "{{cookiecutter.project_slug}}.__main__:run"
 
 [tool.black]
 line-length = 79
@@ -19,10 +18,49 @@ exclude = '''
 )/
 '''
 
-[tool.flit.metadata]
-module = "{{cookiecutter.project_slug}}"
-author = "{{cookiecutter.full_name}}"
-author-email = "{{cookiecutter.email}}"
-home-page = "https://github.com/pole-surfaces-planetaires/{{ cookiecutter.project_slug }}"
-classifiers = [ "License :: OSI Approved :: {% if cookiecutter.open_source_license == 'GNU General Public License v3' -%}GNU General Public License v3 (GPLv3){% elif cookiecutter.open_source_license == 'GNU Lesser General Public License v3' -%}GNU Lesser General Public License v3 (LGPLv3){% elif cookiecutter.open_source_license == 'GNU Affero General Public License v3' -%}GNU Affero General Public License v3 (AGPLv3){% endif %}",]
-description-file = "README.rst"
+[tool.poetry]
+name = "{{cookiecutter.project_slug}}"
+readme = "README.rst"
+description = "{{cookiecutter.project_description}}"
+authors = ["{{cookiecutter.full_name}} <{{cookiecutter.email}}>", ]
+license = {% if cookiecutter.open_source_license == 'GNU Lesser General Public License v3' -%}"LGPL-3.0-or-later"{% elif cookiecutter.open_source_license == 'Apache V2.0' -%}"Apache-2.0"{% elif cookiecutter.open_source_license == 'MIT' -%}"MIT"{% endif %}
+packages = [{include = "{{ cookiecutter.project_slug }}"}]
+homepage = "{{cookiecutter.project_url}}"
+version = "{{cookiecutter.version}}"
+include = ["AUTHORS.rst","CHANGELOG","CONTRIBUTING.rst","Dockerfile","LICENSE","Makefile","pyproject.toml","README.rst","tox.ini","docker/*","docs/*","scripts/*","**/conf/*", ".dockerignore"]
+
+[tool.poetry.dependencies]
+python = "^{{cookiecutter.python_version}}"
+toml = "^0.10.2"
+loguru = "^0.7.2"
+
+[tool.poetry.scripts]
+{{cookiecutter.project_slug}} = "{{cookiecutter.project_slug}}.__main__:run"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.8.0"
+pre-commit-hooks = "^4.6.0"
+flit = "^3.10.1"
+flit-core = "^3.10.1"
+black = "^24.10.0"
+coverage = "^7.6.4"
+flake8 = "^7.1.1"
+mccabe = "^0.7.0"
+mypy = "^1.13.0"
+mypy-extensions = "^1.0.0"
+pylint = "^3.3.1"
+pytest = "^8.3.3"
+tox = "^4.12.1"
+Sphinx = "^7.4.7"
+pip-licenses = "^5.0.0"
+sphinx_rtd_theme = "^2.0.0"
+sphinx-bootstrap-theme = "^0.8.1"
+sphinxcontrib-plantuml = "^0.27"
+pytest-html = "^4.1.1"
+dockerfile-parse = "^2.0.1"
+pytest-mock = "^3.14.0"
+docker = "^7.1.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

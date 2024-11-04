@@ -1,23 +1,31 @@
+# -*- coding: utf-8 -*-
+# {{cookiecutter.project_name}} - {{cookiecutter.project_description}}
+# Copyright (C) {{cookiecutter.year}} - {{cookiecutter.institute}} ({{cookiecutter.full_name}} for {{cookiecutter.consortium_name}})
+# This file is part of {{cookiecutter.project_name}} <{{ cookiecutter.project_url }}>
+# SPDX-License-Identifier: {% if cookiecutter.open_source_license == 'GNU Lesser General Public License v3' -%}LGPL-3.0-or-later{% elif cookiecutter.open_source_license == 'Apache V2.0' -%}Apache-2.0{% elif cookiecutter.open_source_license == 'MIT' -%}MIT{% endif %}
 """This module contains the library."""
-import logging
+import sys
 import configparser
+from loguru import logger
 from ._version import __name_soft__
-
-logger = logging.getLogger(__name__)
-
+from py_sas_data_modeler.dm import DataClassFactory
+from py_sas_data_modeler.io import HDF5StorageSasTask
+from typing import Any
+from typing import Dict
 
 class {{cookiecutter.project_class_lib}}:
     """The library"""
-
-    def __init__(self, path_to_conf: str, directory: str, *args, **kwargs):
+    
+    def __init__(self, **kwargs):
         # pylint: disable=unused-argument
-        if "level" in kwargs:
-            {{cookiecutter.project_class_lib}}._parse_level(kwargs["level"])
-
-        self.__directory = directory
-        self.__config = configparser.ConfigParser()
+        path_to_conf = kwargs.get("conf_file", "conf/testmyproject.conf")
+        self.__config: configparser.ConfigParser = configparser.ConfigParser()
         self.__config.optionxform = str  # type: ignore
         self.__config.read(path_to_conf)
+                
+        self.__level: str = kwargs.get("level", 'INFO')        
+        {{cookiecutter.project_class_lib}}._parse_level(self.__level)
+
 
     @staticmethod
     def _parse_level(level: str):
@@ -27,24 +35,24 @@ class {{cookiecutter.project_class_lib}}:
         Args:
             level (str): level name
         """
-        logger_main = logging.getLogger(__name_soft__)
         if level == "INFO":
-            logger_main.setLevel(logging.INFO)
+            loguru_level = "INFO"
         elif level == "DEBUG":
-            logger_main.setLevel(logging.DEBUG)
+            loguru_level = "DEBUG"
         elif level == "WARNING":
-            logger_main.setLevel(logging.WARNING)
+            loguru_level = "WARNING"
         elif level == "ERROR":
-            logger_main.setLevel(logging.ERROR)
+            loguru_level = "ERROR"
         elif level == "CRITICAL":
-            logger_main.setLevel(logging.CRITICAL)
+            loguru_level = "CRITICAL"
         elif level == "TRACE":
-            logger_main.setLevel(logging.TRACE)  # type: ignore # pylint: disable=no-member
-        else:
-            logger_main.warning(
-                "Unknown level name : %s - setting level to INFO", level
-            )
-            logger_main.setLevel(logging.INFO)
+            loguru_level = "TRACE"
+        else:            
+            loguru_level = "INFO"
+            logger.log(loguru_level, f"Unknown level name : {level} - setting level to INFO")
+            
+        logger.remove()
+        logger.add(sys.stdout, level=loguru_level)
 
     @property
     def config(self) -> configparser.ConfigParser:
@@ -54,12 +62,6 @@ class {{cookiecutter.project_class_lib}}:
         :type: configparser.ConfigParser
         """
         return self.__config
-
-    @property
-    def directory(self) -> str:
-        """The output directory.
-
-        :getter: Returns the output directory
-        :type: str
-        """
-        return self.__directory
+    
+    def run(self, *args, **kwargs):
+        pass

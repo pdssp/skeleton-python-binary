@@ -23,6 +23,6 @@ deploy:
     secure: PLEASE_REPLACE_ME
   on:
     tags: true
-    repo: pole-surfaces-planetaires/{{ cookiecutter.project_slug }}
+    repo: pdssp/{{ cookiecutter.project_slug }}
     python: 3.8
 {%- endif %}
