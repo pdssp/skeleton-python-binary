@@ -265,7 +265,7 @@ latex_documents = [
     (
         master_doc,
         "{{ cookiecutter.project_slug }}.tex",
-        title + " Documentation",
+        title.replace("_", r"\_") + " Documentation",
         author,
         "manual",
     ),
