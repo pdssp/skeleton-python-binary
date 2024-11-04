@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := init
-.PHONY: upload-test-pypi upload-prod-pypi retrieve_test_data add_req_prod add_req_dev add_major_version add_minor_version add_patch_version add_premajor_version add_preminor_version add_prepatch_version add_prerelease_version prepare-dev install-dev data help lint tests coverage upload-prod-pypi upload-test-pypi update_req update_req_dev pyclean doc doc-pdf visu-doc-pdf visu-doc tox licences check_update update_latest_dev update_latest_main show_deps_main show_deps_dev show_obsolete
+.PHONY: upload-test-pypi upload-prod-pypi docker add_req_prod add_req_dev add_major_version add_minor_version add_patch_version add_premajor_version add_preminor_version add_prepatch_version add_prerelease_version prepare-dev install-dev data help lint tests coverage upload-prod-pypi upload-test-pypi update_req update_req_dev pyclean doc doc-pdf visu-doc-pdf visu-doc tox licences check_update update_latest_dev update_latest_main show_deps_main show_deps_dev show_obsolete
 VENV = ".venv"
 VENV_RUN = ".{{cookiecutter.project_slug}}"
 
@@ -36,7 +36,7 @@ Usage:\n
 	make add_req_prod pkg=<name>\t Add the package in the dependencies of .toml\n
 	make add_req_dev pkg=<name>\t Add the package in the DEV dependencies of .toml\n
 	\n
-	make retrieve_test_data\t Retrieve the test data from gitlab fs\n
+	make docker\t\t\t Create the docker image\n	
 	\n
 	-------------------------------------------------------------------------\n
 	\t\tVersion\n
@@ -243,3 +243,6 @@ show_obsolete:
 
 pyclean:
 	find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
+
+docker:
+	sh docker/build.sh
