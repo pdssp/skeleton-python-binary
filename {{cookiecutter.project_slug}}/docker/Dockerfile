@@ -36,7 +36,7 @@ RUN apt-get update -qq \
 
 RUN pip install poetry && poetry config installer.max-workers 10 && poetry config virtualenvs.create false
 COPY . .
-RUN make
+RUN make release && VERSION=$(poetry version -s) && pip install dist/{{ cookiecutter.project_slug }}-${VERSION}.tar.gz
 
 FROM python:{{cookiecutter.python_version}}-slim-bullseye AS release
 ARG BUILD_DATE
@@ -63,3 +63,5 @@ COPY --from=builder /usr/local/ /usr/local/
 
 # Regenerate the shared-library cache
 RUN ldconfig
+
+ENTRYPOINT ["{{ cookiecutter.project_slug }}"]
