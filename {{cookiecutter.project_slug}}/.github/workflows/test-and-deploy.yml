@@ -31,7 +31,7 @@ jobs:
       run: make doc-pdf
 
     - name: move PDF to HTML
-      run: mv docs/build/latex/pymoon.pdf docs/build/html
+      run: mv docs/build/latex/{{cookiecutter.project_slug}}.pdf docs/build/html
 
     - name: Deploy on gh-pages
       uses: peaceiris/actions-gh-pages@v3
