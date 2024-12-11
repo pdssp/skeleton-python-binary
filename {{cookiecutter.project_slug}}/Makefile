@@ -160,10 +160,10 @@ doc:
 	poetry run pytest --ignore=./tests/msap_data -ra --html=docs/source/_static/report.html
 	poetry run make coverage
 	poetry run coverage html -d docs/source/_static/coverage
-	make html -C docs
+	poetry run make html -C docs
 
 doc-pdf:
-	make doc && make latexpdf -C docs
+	make doc && poetry run make latexpdf -C docs
 
 visu-doc-pdf:
 	acroread docs/build/latex/{{cookiecutter.project_slug}}.pdf
