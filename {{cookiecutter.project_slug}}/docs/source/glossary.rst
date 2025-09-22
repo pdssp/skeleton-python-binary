@@ -7,3 +7,6 @@ Terms, definitions and abbreviated terms
 
     SUM
         Software User Manual
+        
+    COTS
+        Commercial Off-The-Shelf

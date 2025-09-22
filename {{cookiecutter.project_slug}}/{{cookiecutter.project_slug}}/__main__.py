@@ -5,6 +5,7 @@
 # SPDX-License-Identifier: {% if cookiecutter.open_source_license == 'GNU Lesser General Public License v3' -%}LGPL-3.0-or-later{% elif cookiecutter.open_source_license == 'Apache V2.0' -%}Apache-2.0{% elif cookiecutter.open_source_license == 'MIT' -%}MIT{% endif %}
 """Main program."""
 from loguru import logger
+logger.remove()
 import argparse
 import signal
 import sys
@@ -13,8 +14,7 @@ from {{cookiecutter.project_slug}} import __copyright__
 from {{cookiecutter.project_slug}} import __description__
 from {{cookiecutter.project_slug}} import __version__
 from .{{cookiecutter.project_slug}} import {{cookiecutter.project_class_lib}}
-
-
+        
 class SmartFormatter(argparse.HelpFormatter):
     """Smart formatter for argparse - The lines are split for long text"""
 
@@ -79,13 +79,7 @@ def parse_cli() -> argparse.Namespace:
         "--conf_file",
         default="conf/{{cookiecutter.project_slug}}.conf",
         help="The location of the configuration file (default: %(default)s)",
-    )
-    
-    parser.add_argument(
-        "--directory",
-        default="/app",
-        help="The base directory where the data products are read and saved (default: %(default)s)",
-    )
+    )  
 
     parser.add_argument(
         "--level",
@@ -110,11 +104,12 @@ def run():
     signal.signal(signal.SIGINT, handler.signal_handler)
     try:
         options_cli = parse_cli()
+        logger.add(sys.stderr, level=options_cli.level)
 
         {{cookiecutter.project_slug}} = {{cookiecutter.project_class_lib}}(
             **vars(options_cli)
         )
-        {{cookiecutter.project_slug}}.run()
+        {{cookiecutter.project_slug}}.run(mode=vars(options_cli).get("mode"))
         sys.exit(0)
     except Exception as error:  # pylint: disable=broad-except
         logger.exception(error)

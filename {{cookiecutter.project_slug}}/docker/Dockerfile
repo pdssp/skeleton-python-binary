@@ -15,9 +15,6 @@ RUN apt-get update -qq \
       && rm -rf /var/lib/apt/lists/*
 
 FROM base AS builder
-ARG CI_JOB_TOKEN
-ENV project_url={{ cookiecutter.project_url }}.git
-
 WORKDIR /app
 
 RUN apt-get update -qq \
@@ -36,6 +33,8 @@ RUN apt-get update -qq \
 
 RUN pip install poetry && poetry config installer.max-workers 10 && poetry config virtualenvs.create false
 COPY . .
+ARG POETRY_LOCK=1
+RUN make
 RUN make release && VERSION=$(poetry version -s) && pip install dist/{{ cookiecutter.project_slug }}-${VERSION}.tar.gz
 
 FROM python:{{cookiecutter.python_version}}-slim-bullseye AS release

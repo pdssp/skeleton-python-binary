@@ -4,7 +4,8 @@
 # This file is part of {{cookiecutter.project_name}} <{{ cookiecutter.project_url }}>
 # SPDX-License-Identifier: {% if cookiecutter.open_source_license == 'GNU Lesser General Public License v3' -%}LGPL-3.0-or-later{% elif cookiecutter.open_source_license == 'Apache V2.0' -%}Apache-2.0{% elif cookiecutter.open_source_license == 'MIT' -%}MIT{% endif %}
 """{{cookiecutter.project_description}}"""
-import os
+from .config import configure_logging
+configure_logging()
 
 from ._version import __author__
 from ._version import __author_email__

@@ -29,6 +29,6 @@ subprocess.run(
         "third_party.rst",
         "-p",
 
-    ] 
+    ]
     + packages
 )

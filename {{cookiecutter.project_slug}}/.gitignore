@@ -128,6 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-{{ cookiecutter.project_slug }}-env/
+.{{ cookiecutter.project_slug }}
 
 docs/build/
+
+**/tests/msap_data/

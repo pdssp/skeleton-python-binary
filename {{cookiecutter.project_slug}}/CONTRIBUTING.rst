@@ -15,7 +15,7 @@ Types of Contributions
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/pdssp/{{ cookiecutter.project_slug }}/issues.
+Report bugs at {{ cookiecutter.project_url }}/issues.
 
 If you are reporting a bug, please include:
 
@@ -26,13 +26,13 @@ If you are reporting a bug, please include:
 Fix Bugs
 ~~~~~~~~
 
-Look through the GitHub issues for bugs. Anything tagged with "bug" and "help
+Look through the Gitlab issues for bugs. Anything tagged with "bug" and "help
 wanted" is open to whoever wants to implement it.
 
 Implement Features
 ~~~~~~~~~~~~~~~~~~
 
-Look through the GitHub issues for features. Anything tagged with "enhancement"
+Look through the Gitlab issues for features. Anything tagged with "enhancement"
 and "help wanted" is open to whoever wants to implement it.
 
 Write Documentation
@@ -45,7 +45,7 @@ articles, and such.
 Submit Feedback
 ~~~~~~~~~~~~~~~
 
-The best way to send feedback is to file an issue at https://github.com/pdssp/{{ cookiecutter.project_slug }}/issues.
+The best way to send feedback is to file an issue at {{ cookiecutter.project_url }}/issues.
 
 If you are proposing a feature:
 
@@ -59,16 +59,17 @@ Get Started!
 
 Ready to contribute? Here's how to set up `{{ cookiecutter.project_slug }}` for local development.
 
-1. Fork the `{{ cookiecutter.project_slug }}` repo on GitHub.
+1. Fork the `{{ cookiecutter.project_slug }}` repo on Gitlab.
 2. Clone your fork locally::
 
-    $ git clone git@github.com:your_name_here/{{ cookiecutter.project_slug }}.git
+    $ git clone {{ cookiecutter.project_url }}.git
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
+3. Install your local copy into a virtualenv. Assuming you have virtualenv installed, this is how you set up your fork for local development::
 
-    $ mkvirtualenv {{ cookiecutter.project_slug }}
     $ cd {{ cookiecutter.project_slug }}/
-    $ python setup.py develop
+    $ make prepare-dev
+    $ source .{{ cookiecutter.project_slug }}/
+    $ make install-dev
 
 4. Create a branch for local development::
 
@@ -79,19 +80,18 @@ Ready to contribute? Here's how to set up `{{ cookiecutter.project_slug }}` for 
 5. When you're done making changes, check that your changes pass flake8 and the
    tests, including testing other Python versions with tox::
 
-    $ flake8 {{ cookiecutter.project_slug }} tests
-    $ python setup.py test or pytest
+    $ make lint
+    $ make tests
     $ tox
 
-   To get flake8 and tox, just pip install them into your virtualenv.
 
-6. Commit your changes and push your branch to GitHub::
+6. Commit your changes and push your branch to Gitlab::
 
     $ git add .
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-7. Submit a pull request through the GitHub website.
+7. Submit a pull request through the Gitlab website.
 
 Pull Request Guidelines
 -----------------------
@@ -108,7 +108,8 @@ Tips
 
 To run a subset of tests::
 
-$ pytest tests.test_{{ cookiecutter.project_slug }}
+    $ pytest tests.test_{{ cookiecutter.project_slug }}
+
 
 Deploying
 ---------

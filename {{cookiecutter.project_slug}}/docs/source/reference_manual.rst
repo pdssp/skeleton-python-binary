@@ -17,11 +17,11 @@ Help method
 in terms of the actions to be performed by the user, how to invoke the \
 function, possible errors, how to resolve them and what results to expect.*
 
-.. automodule:: {{ cookiecutter.project_slug }}.monitoring
-.. autoclass:: UtilsMonitoring
+.. automodule:: {{ cookiecutter.project_slug }}.{{ cookiecutter.project_slug }}
    :members:
    :private-members:
-
+   :undoc-members:
+   :show-inheritance:   
 
 Screen definitions and operations
 ---------------------------------
