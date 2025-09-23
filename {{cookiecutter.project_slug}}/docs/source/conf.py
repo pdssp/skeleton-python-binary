@@ -14,6 +14,7 @@ import os
 import sys
 
 import sphinx_bootstrap_theme
+import {{ cookiecutter.project_slug }}
 
 sys.path.insert(0, os.path.abspath("../.."))
 
@@ -27,8 +28,6 @@ def setup(app):
     app.add_css_file("my-styles.css")  # also can be a full URL
     app.connect("autodoc-skip-member", skip)
 
-import {{ cookiecutter.project_slug }}
-
 # -- Project information -----------------------------------------------------
 
 project = "{{cookiecutter.project_name}}"
@@ -37,7 +36,7 @@ author = "{{cookiecutter.full_name}}"
 version = {{ cookiecutter.project_slug }}.__version__
 release = {{ cookiecutter.project_slug }}.__version__
 title = {{ cookiecutter.project_slug }}.__title__
-project_url = "https://github.com/pdssp/{{ cookiecutter.project_slug }}"
+project_url = "{{ cookiecutter.project_url }}"
 
 
 # -- General configuration ---------------------------------------------------
@@ -214,7 +213,7 @@ latex_elements = {
             \centering
 
             \vspace*{40mm} %%% * is used to give space from top
-            \textbf{\Huge {"""+title.replace("_", r"\_")+ r"""}}
+            \textbf{\Huge {"""+title+ r"""}}
 
             \vspace{0mm}
             \begin{figure}[!h]
@@ -223,7 +222,7 @@ latex_elements = {
             \end{figure}
 
             \vspace{0mm}
-            \Large \textbf{"""+author.replace("_", r"\_")+ r"""}
+            \Large \textbf{"""+author+ r"""}
 
             \small Created on : {{ cookiecutter.month }}, {{ cookiecutter.year }}
 
@@ -233,9 +232,9 @@ latex_elements = {
 
             %% \vfill adds at the bottom
             \vfill
-            \small \textit{More information about }{\href{""" + project_url.replace("_", r"\_") + r"""}{""" + title.replace("_", r"\_") + r"""}}
+            \small \textit{More information about }{\href{""" + project_url + r"""}{""" + title + r"""}}
 
-            \small \textit{""" + copyright.replace("_", r"\_") + r"""}
+            \small \textit{""" + copyright + r"""}
         \end{titlepage}
 
         \clearpage

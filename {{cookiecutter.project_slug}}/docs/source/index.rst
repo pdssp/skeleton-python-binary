@@ -18,6 +18,7 @@ Welcome to {{ cookiecutter.project_name }}'s documentation!
    operation_manual
    reference_manual
    tutorial
+   legal
 
 ================
 Analytical Index

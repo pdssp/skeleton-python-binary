@@ -27,7 +27,6 @@ def test_project_structure(generate_project):
         "pyproject.toml",
         "Makefile",
         "LICENSE",
-        "Dockerfile",
         "CONTRIBUTING.rst",
         "CHANGELOG",
         "AUTHORS.rst",
@@ -97,7 +96,7 @@ def test_license(generate_project):
     
 def test_Dockerfile(generate_project):
     """Check the Dockerfile is correctly generated."""
-    readme_path = os.path.join(generate_project, "testproject", "Dockerfile")
+    readme_path = os.path.join(generate_project, "testproject", "docker", "Dockerfile")
     
     with open(readme_path, 'r') as readme_file:
         content = readme_file.read()
